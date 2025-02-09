@@ -1,0 +1,113 @@
+:root {
+  /* Core Colors */
+  --primary-color: #4a90e2; /* Modern Blue */
+  --primary-color-hover: #0056b3;
+  --secondary-color: #7b61ff; /* Vibrant Purple */
+  --neutral-color: #2e2e2e; /* Charcoal */
+  --background: #ffffff; /* White */
+  --text-color: #333333; /* Neutral Dark */
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --button-color: #d6b934;
+
+  /* Skleton */
+  --skeleton-gradient: linear-gradient(
+    90deg,
+    hsl(210, 15%, 88%),
+    hsl(210, 15%, 95%),
+    hsl(210, 15%, 88%)
+  );
+  --box-shadow-color: hsl(210, 14%, 80%);
+
+  /* Sizing Collection */
+  --extra-small-size: 1.7rem;
+  --small-size: 2rem;
+  --sm-size: 3rem;
+  --medium-size: 4rem;
+  --large-size: 8rem;
+
+
+  /* for extra width */
+  --extra-width: 20rem;
+
+
+  /* Constant colors */
+  --menu-color: #1e1e1e;
+  --black : #000000;
+  --white : #ffffff;
+  --gray : #808080;
+  --input-color: #5b90cc; /* Modern Blue */
+}
+
+[data-theme='dark'] {
+  --background: #181818;
+  --text-color: #e5e5e5;
+  --shadow-color: rgba(0, 0, 0, 0.6);
+  --primary-color: #30363d; 
+  --primary-color-hover: #4a5868;
+
+  /*Skleton*/
+  --skeleton-gradient: linear-gradient(
+    90deg,
+    hsl(210, 2%, 18%),
+    hsl(210, 2%, 16%),
+    hsl(220, 3%, 17%)
+  );
+  --box-shadow-color: rgba(0, 0, 0, 0.6); /* Darker shadow */
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--text-color);
+}
+
+[data-theme='dark'] .home-image,
+[data-theme='dark'] .about-image {
+  background-image: none;
+}
+[data-theme='dark'] .st-sunMoonThemeToggleBtn svg{
+  color: #fff9c2;;
+}
+
+button, input, textarea, select {
+  outline: none; /* Remove blue outline */
+  -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile */
+}
+
+button:focus, input:focus, textarea:focus, select:focus {
+  outline: none; /* Remove outline on focus */
+  box-shadow: none; /* Remove focus shadow */
+}
+
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-color);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  background-color: var(--background);
+  color: var(--text-color);
+  transition: background-color 0.4s, color 0.4s;
+}

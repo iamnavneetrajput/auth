@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Navigate to the project directory
+cd /home/navneet/Desktop/blog
+
+# Pull the latest changes from the repository
+git pull origin main
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+
+# Deploy the build to the server
+scp -r dist/* user@server:/path/to/deployment
+
+# Restart the server
+ssh user@server 'sudo systemctl restart myapp'
+
+echo "Deployment completed successfully."
