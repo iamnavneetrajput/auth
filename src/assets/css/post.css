@@ -1,0 +1,374 @@
+.main-editor-page {
+  margin-top: 60px;
+}
+
+/* Main Editor Container */
+.editor-container {
+  background: var(--background);
+  /* border: 1px solid #cbd5e1; */
+  padding: 10px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Title Input */
+.editor-title {
+  text-align: left;
+  min-height: 40px;
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  background: var(--background);
+  font-weight: bold;
+  outline: none;
+}
+
+/* Content Input (Fixed Height & Scrollable) */
+.editor-content {
+  text-align: left;
+  height: 350px;
+  /* Fixed height */
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  background: var(--background);
+  color: var(--text-color);
+  overflow-y: auto;
+  /* Enables scrolling inside when content overflows */
+  white-space: pre-wrap;
+  /* Preserves spacing and wraps text */
+  word-wrap: break-word;
+  /* Ensures words wrap properly */
+}
+
+
+/* Editor Actions */
+.editor-actions {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px;
+  border-top: 1px solid #cbd5e1;
+  align-items: center;
+}
+
+/* Action Buttons */
+.action-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  background: var(--primary-color);
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  border-color: #334155;
+  background: #e2e8f0;
+}
+
+.action-btn:focus {
+  background: #3b82f6;
+  border-color: #1e40af;
+  fill: #bfdbfe;
+}
+
+
+/* General styling for code blocks */
+pre {
+  white-space: pre-wrap;
+  /* Wrap long lines to prevent overflow */
+  word-wrap: break-word;
+  /* Break long words and wrap them */
+  overflow-x: auto;
+  /* Horizontal scroll if content overflows */
+  max-width: 100%;
+  /* Prevent code block from exceeding screen width */
+  background-color: var(--background);
+  /* Background color for code */
+  color: var(--text-color);
+  /* Text color for code */
+  border-radius: 5px;
+  font-size: 12px;
+  /* General font size */
+  line-height: 1.5;
+}
+
+/* Styling for <code> inside <pre> */
+pre code {
+  display: block;
+  white-space: pre-wrap;
+  /* Wrap long lines */
+  font-family: Consolas, 'Courier New', monospace;
+}
+
+
+.editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.toolbar button {
+  margin-right: 10px;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: var(--background);
+  border-bottom: 1px solid var(--primary-color);
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: yellow transparent;
+}
+
+
+.toolbar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  color: var(--text-color);
+}
+
+.post-cateogory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.post-category-select {
+  background-color: var(--background);
+  color: var(--text-color);
+  padding: 3px;
+}
+
+.toolbar-media {
+  display: flex;
+  gap: 10px;
+}
+
+
+.alignment-menu {
+  position: relative;
+}
+
+/* General notification styles */
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 15px 30px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  font-size: 18px;
+  animation: fadeInScale 0.3s ease-in-out, fadeOutScale 3s ease-in-out 2.7s;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+}
+
+/* Success notification styles */
+.notification.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 2px solid #c3e6cb;
+}
+
+/* Error notification styles */
+.notification.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 2px solid #f5c6cb;
+}
+
+/* Icon styling */
+.notification-icon {
+  font-size: 24px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.notification-message {
+  flex: 1;
+  text-align: center;
+}
+
+/* Success icon (green checkmark) */
+.notification.success .notification-icon svg {
+  color: #28a745;
+}
+
+/* Error icon (red X) */
+.notification.error .notification-icon svg {
+  color: #dc3545;
+}
+
+/* Fade in and scale animation */
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translate(-50%, -50%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%);
+  }
+}
+
+/* Fade out and scale animation */
+@keyframes fadeOutScale {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.8) translate(-50%, -50%);
+  }
+}
+
+input.modal-input {
+  background-color: var(--background);
+}
+
+.emoji-picker{
+  padding: 10px;
+}
+
+button.emoji-button{
+  background-color: transparent;
+  width: 45px;
+  height: 45px;
+  border: none;
+  outline: auto;
+}
+
+/* Predefined Color Grid */
+.color-picker-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.107);
+  border-radius: 5px;
+}
+
+/* Individual Color Option */
+.color-option {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.color-option:hover {
+  transform: scale(1.2);
+}
+
+/* Modal overlay styles (common for all modals) */
+.modal-overlay,
+.unified-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal container (common for all modals) */
+.modal-container {
+  background: var(--background);
+  padding: 25px;
+  border-radius: 8px;
+  max-width: 450px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+/* Close button styling */
+.close-modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+/* Close button */
+
+.close-modal svg {
+  color: var(--text-color);
+  background-color: var(--primary-color);
+  border: none;
+  padding: 2px;
+  border-radius: 6px;
+}
+
+/* Input fields (common for all modals) */
+.modal-input {
+  display: block;
+  margin: 10px 0;
+  padding: 8px;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Button group for actions (common for all modals) */
+
+.button-group{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+button.modal-button.cancel-button,
+button.modal-button.submit-button{
+  width: 45px;
+  height: 45px;
+  background-color: var(--primary-color);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modal-button svg {
+  font-size: 1.2em;
+  vertical-align: middle;
+  color: var(--text-color);
+}

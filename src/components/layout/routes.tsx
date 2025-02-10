@@ -13,6 +13,7 @@ const ResetPassword = lazy(() => import('../../pages/ResetPassword'));
 const Dashboard = lazy(() => import('../../pages/login/pages/Dashboard'));
 const User = lazy(() => import('../../pages/login/pages/User'));
 const Reels = lazy(() => import('../../pages/Reels'));
+const Blogger = lazy(() => import('../../blogger/Blogger'));
 
 export const appRoutes: RouteObject[] = [
   { path: '/', element: <Home /> },
@@ -27,4 +28,5 @@ export const appRoutes: RouteObject[] = [
 
   { path: '/account/*', element: <PrivateRoute><Dashboard /></PrivateRoute> },
   { path: '/settings', element: <PrivateRoute><User/></PrivateRoute> },
+  { path: '/write', element: <PrivateRoute><Blogger/></PrivateRoute>}
 ];

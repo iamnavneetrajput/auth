@@ -1,168 +1,88 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
 import { FiSend, FiEye, FiSave, FiDelete } from 'react-icons/fi';
 import Toolbar from './Toolbar';
-import Notification from './Notification';
-import PreviewModal from './PreviewModal';
+import Notification from '../components/particles/Notification';
+// import PreviewModal from './components/PreviewModal';
+
+// Define available message types
+type MessageType = 'success' | 'error';
 
 const Blogger: React.FC = () => {
+  const [previewMode, setPreviewMode] = useState<boolean>(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [messageType, setMessageType] = useState<MessageType>('success');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-    const [title, setTitle] = useState(''); // State for the post title
-    const [content, setContent] = useState(''); // State for the post content
-    const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
-    const contentRef = useRef(null);  // Reference to the contenteditable div for content
-    const titleRef = useRef(null);  // Reference to the contenteditable div for title
-    const [previewMode, setPreviewMode] = useState(false); // Preview mode state
-    const [message, setMessage] = useState(''); // State for showing messages
-    const [messageType, setMessageType] = useState('success'); // Message type: success or error
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const titleRef = useRef<HTMLDivElement | null>(null);
 
-    
-  // Function to handle publishing the content
-  const handlePublish = async () => {
-    const content = contentRef.current.innerHTML; // Get HTML content from editor
-    const titleText = titleRef.current.innerText; // Get title from title editor
-
-    if (!selectedCategory) {
-      console.error('Please select a category.');
-      showMessage('Please select a category.', 'error');
-      return;
-    }
-
-    try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/posts`, {
-        title: titleText,
-        content,
-      console.error('Error saving post:', (error as any).response?.data || (error as any).message);
-      });
-      console.log('Post saved:', response.data);
-      showMessage('Post published successfully!', 'success');
-    } catch (error) {
-      console.error('Error saving post:', error.response?.data || error.message);
-      showMessage('Failed to publish post.', 'error');
-    }
-  };
-
-  // Save content to localStorage
-  const handleSave = () => {
-    const content = contentRef.current.innerHTML;
-    localStorage.setItem('editorContent', content);
-    showMessage('Content saved!', 'success'); // Display save message
-  };
-
-  // Clear the editor content
-  const handleClear = () => {
-    contentRef.current.innerHTML = '';
-    showMessage('Content cleared!', 'success'); // Display clear message
-  };
-
-  // Handle title input changes
-  const handleTitleInput = () => {
-    if (titleRef.current) {
-  const showMessage = (msg: string, type: 'success' | 'error' = 'success') => {
-    }
-  };
-
-  // Show a message and auto-hide after 3 seconds
-  const showMessage = (msg, type = 'success') => {
+  /** Show a notification message */
+  const showMessage = (msg: string, type: MessageType = 'success') => {
     setMessage(msg);
     setMessageType(type);
-    setTimeout(() => setMessage(''), 3000); // Auto-hide after 3 seconds
+    setTimeout(() => setMessage(null), 3000);
   };
 
-  const clearMessage = () => {
-    setMessage(''); // Clear the message
+  /** Save content to localStorage */
+  const handleSave = () => {
+    if (contentRef.current) {
+      localStorage.setItem('editorContent', contentRef.current.innerHTML);
+      showMessage('Content saved successfully!', 'success');
+    }
   };
 
+  /** Clear the editor */
+  const handleClear = () => {
+    if (contentRef.current) {
+      contentRef.current.innerHTML = '';
+      showMessage('Content cleared!', 'success');
+    }
+  };
+
+  /** Load default values when the component mounts */
   useEffect(() => {
-    // Set default text when component mounts
-    if (titleRef.current) {
-      titleRef.current.innerText = 'Enter Your Title'; // Default title text
-    }
-    if (contentRef.current) {
-      contentRef.current.innerHTML = 'Start writing your content here...'; // Default content text
-    }
+    if (titleRef.current) titleRef.current.innerText = 'Enter Your Title';
+    if (contentRef.current) contentRef.current.innerHTML = 'Start writing your content here...';
   }, []);
-
-  const handleInput = () => {
-    if (titleRef.current && titleRef.current.innerText.trim() === 'Enter Your Title') {
-      titleRef.current.innerText = ''; // Clear the default text when editing starts
-    }
-    if (contentRef.current) {
-      contentRef.current.style.textAlign = 'left';  // Maintain the current alignment
-    }
-  
-    // Ensure the alignment is not lost when the content changes
-    if (editorRef.current) {
-      editorRef.current.style.textAlign = currentAlignment;  // Maintain the current alignment
-    }
-  };
-  
 
   return (
     <div className="main-editor-page main">
-      {/* Toolbar for formatting and adding content */}
-      <Toolbar editorRef={contentRef} setCategory={setSelectedCategory} />
-
-      {/* Title area with default text */}
-      <div className="editor">
-      <div
-        ref={titleRef}
-        className="editor-title"
-        contentEditable="true"
-        style={{
-          border: '1px solid var(--text-color)',
-          padding: '4px',
-          marginTop: '20px',
-          backgroundColor: 'var(--background)',
-          borderRadius: '5px',
-          textAlign: 'left',
-          minHeight: '40px', // Ensures the area is visible
-        }}
-        onInput={handleTitleInput} // Update title state when editing
-        onBlur={handleTitleInput} // Update title state when editing ends
-      />
-
-      {/* Main editor area where content is displayed */}
-      <div
-        ref={contentRef}
-        className="editor-content"
-        contentEditable="true"
-        style={{
-          border: '1px solid var(--text-color)',
-          color: 'var(--text-color)',
-          minHeight: '350px',
-          padding: '10px',
-          marginTop: '20px',
-          backgroundColor: 'var(--background)',
-          borderRadius: '5px',
-          textAlign: 'left',
-        }}
-        onInput={handleInput} // Handle input changes
-      />
-      </div>
-
-      {/* Notification display */}
-      <Notification message={message} type={messageType} clearMessage={clearMessage} />
-
+    {/* Toolbar Section */}
+    <Toolbar editorRef={contentRef} setCategory={setSelectedCategory} />
+  
+    {/* Editor Section */}
+    <div className="editor-container">
+      {/* Title Input */}
+      <div ref={titleRef} className="editor-title" contentEditable></div>
+  
+      {/* Content Input */}
+      <div ref={contentRef} className="editor-content" contentEditable></div>
+  
+      {/* Notification Message */}
+      {message && (
+        <div className="notification-container">
+          <Notification message={message} type={messageType} clearMessage={() => setMessage(null)} />
+        </div>
+      )}
+  
+      {/* Action Buttons */}
       <div className="editor-actions">
-        {/* Publish */}
-        <button className='publish-btn' onClick={handlePublish}><FiSend title="Publish" /> Publish</button>
-
-        {/* Preview */}
-        <button onClick={() => setPreviewMode(!previewMode)} className='publish-btn'>
-          {previewMode ? <FiEye title="Edit" /> : <FiEye title="Preview" />} Preview
+        <button className="action-btn">
+          <FiSend title="Publish" />
         </button>
-        {previewMode && (
-          <PreviewModal content={contentRef.current.innerHTML} onClose={() => setPreviewMode(false)} />
-        )}
-
-        {/* Save */}
-        <button onClick={handleSave} className='publish-btn'><FiSave title="Save" /> Save</button>
-
-        {/* Clear */}
-        <button onClick={handleClear} className='publish-btn'><FiDelete title="Clear" /> Clear</button>
+        <button onClick={() => setPreviewMode(!previewMode)} className="action-btn">
+          <FiEye title="Preview" />
+        </button>
+        <button onClick={handleSave} className="action-btn">
+          <FiSave title="Save" />
+        </button>
+        <button onClick={handleClear} className="action-btn">
+          <FiDelete title="Clear" />
+        </button>
       </div>
     </div>
+  </div>
+  
   );
 };
 

@@ -1,28 +1,41 @@
-import BlogCard from "../components/particles/BlogCard";
+import React from "react";
+import BlogPost from "../components/particles/BlogPost";
 
-const BlogList = () => {
+const recentPosts = [
+  {
+    author: "Navneet Singh",
+    profileImage: "https://www.kasandbox.org/programming-images/avatars/marcimus-purple.png",
+    date: "Feb 3",
+    timeAgo: "3 days ago",
+    title: "This is the title of the blog that design same as shown in the image and make responsive",
+    tags: ["webdev", "Programming", "ai"],
+    blogImage: 'https://farm2.staticflickr.com/1533/26541536141_41abe98db3_z_d.jpg',
+    likes: 120,
+    comments: 22,
+    readTime: "2 min",
+  },
+  {
+    author: "Abhinit Singh",
+    profileImage: "https://www.kasandbox.org/programming-images/avatars/marcimus-purple.png",
+    date: "Feb 2",
+    timeAgo: "4 days ago",
+    title: "This is the title of the blog that design same as shown in the image and make responsive",
+    tags: ["webdev", "Programming", "ai&ml"],
+    blogImage: "",
+    likes: 120,
+    comments: 25,
+    readTime: "3 min",
+  },
+];
+
+const RecentPosts: React.FC = () => {
   return (
     <div className="main">
-      <BlogCard
-        author="Navneet Singh"
-        date="Feb 3 (3 days ago)"
-        title="this is the title of the blog that design same as shown in the image and make responsive"
-        tags={["webdev", "Programming", "ai"]}
-        likes={120}
-        comments={22}
-        readTime="2 min"
-      />
-      <BlogCard
-        author="Abhinit Singh"
-        date="Feb 2 (4 days ago)"
-        title="this is the title of the blog that design same as shown in the image and make responsive"
-        tags={["webdev", "Programming", "ai&ml"]}
-        likes={120}
-        comments={25}
-        readTime="3 min"
-      />
+      {recentPosts.map((post, index) => (
+        <BlogPost key={index} {...post} />
+      ))}
     </div>
   );
 };
 
-export default BlogList;
+export default RecentPosts;

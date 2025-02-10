@@ -5,6 +5,7 @@ import { logout } from "../../features/auth/authSlice";
 import { setLastPage } from "../../reducers/lastPageSlice";
 import { FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import { RiSettings2Line, RiUser6Line, RiLogoutCircleRLine, RiBookmarkLine } from "react-icons/ri";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
 
 const Sublink = () => {
     const location = useLocation();
@@ -24,6 +25,7 @@ const Sublink = () => {
             <ul>
                 {user ? (
                     <>
+                        <li><NavLink to="/write"> <HiOutlinePencilSquare /><span>Write</span> </NavLink></li>
                         <li><NavLink to="/account"> <RiUser6Line /><span>Account</span> </NavLink></li>
                         <li><NavLink to="/settings"> <RiSettings2Line/><span>Settings</span></NavLink></li>
                         <li><NavLink to="/bookmarks"> <RiBookmarkLine/><span>Bookmarks</span></NavLink></li>

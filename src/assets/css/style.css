@@ -78,6 +78,7 @@ a.active {
   right: 0;
   left: 0;
   z-index: 99;
+  /* overflow: hidden; */
 }
 
 /* Toggle */
@@ -99,10 +100,11 @@ a.active {
 }
 
 .st-sunMoonThemeToggleBtn svg {
+  margin-top: 2px;
   position: absolute;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   transition: transform 0.4s ease;
   transform: rotate(40deg);
 }
@@ -275,10 +277,26 @@ a.active {
   align-items: center;
 }
 
+.submenu,
+.footer {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.submenu.hidden {
+  /* transform: translateY(-100%); */
+  opacity: 0;
+}
+
+.footer.hidden {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+
 .main {
   margin-top: 90px;
   flex-grow: 1;
-  margin-bottom: 80px;
+  /* margin-bottom: 80px; */
   text-align: center;
 }
 
@@ -467,6 +485,106 @@ p.skeleton {
   }
 }
 
+.blog-post {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border-bottom: 1px solid var(--text-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid var(--box-shadow-day-night);
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.post-info h4 {
+  margin: 0;
+}
+
+.post-info small {
+  color: gray;
+}
+
+.post-image img {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  background-color: var(--skeleton-gradient);
+  object-fit: cover;
+  object-position: center;
+  background-repeat: no-repeat;
+}
+
+.post-content h3 {
+  text-align: left;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.tags {
+  color: gray;
+   text-align: left;
+}
+
+.post-footer {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  font-size: 14px;
+  color: gray;
+  margin-top: 10px;
+}
+
+.post-footer span {
+  display: flex;
+  align-items: center;
+}
+
+/* .post-footer span:nth-child(1), */
+.post-footer span:nth-child(2),
+.post-footer span:nth-child(3),
+.post-footer span:nth-child(4) {
+  margin-left: 10px;
+}
+
+.post-footer svg {
+  margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+  .blog-post {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .profile-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .post-content h3 {
+    font-size: 1rem;
+  }
+
+  .post-footer {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
 
 /* Footer  */
 footer {
@@ -563,81 +681,6 @@ hr {
   display: block;
   opacity: 1;
 }
-
-.blog-card {
-  max-width: 800px;
-  margin: 10px auto;
-  padding: 15px;
-  background: var(--background);
-  display: flex;
-  flex-direction: column;
-}
-
-.blog-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.profile-img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.blog-header-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.blog-header h4 {
-  margin: 0;
-  font-size: 16px;
-}
-
-.blog-date {
-  margin: 0;
-  font-size: 13px;
-  color: gray;
-}
-
-.blog-image {
-  width: 100%;
-  height: 150px;
-  background: #e0e0e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0;
-  border-radius: 8px;
-}
-
-.blog-content {
-  text-align: left;
-}
-
-.tags {
-  color: gray;
-  font-size: 14px;
-}
-
-.blog-footer {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Removes extra spacing */
-  font-size: 14px;
-  color: #666;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .blog-card {
-    max-width: 90%;
-  }
-}
-
 
 /* src/Sidebar.css */
 .sidebar {
@@ -1093,4 +1136,22 @@ video::-webkit-media-controls {
   .description {
     font-size: 0.875rem;
   }
+}
+
+/* Back Button */
+.back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.back-button:hover {
+  background: rgba(0, 0, 0, 0.7);
 }

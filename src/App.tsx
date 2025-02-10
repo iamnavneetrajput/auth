@@ -2,18 +2,14 @@ import React, { Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, useRoutes } from "react-router-dom";
 import { RootState, AppDispatch } from "./store";
-
-import Navbar from "./components/layout/Navbar";
-import Submenu from "./components/layout/Submenu";
-import Loader from "./components/layout/Loader";
 import Layout from "./components/layout/Layout";
-
-import useTheme from "./utils/useTheme";
+import Loader from "./components/layout/Loader";
 import { appRoutes } from "./components/layout/routes"; // Import route config
 import { fetchUser } from "./features/auth/authActions";
 
 import "./App.css";
 import "./assets/css/style.css";
+import "./assets/css/post.css"
 import "./assets/css/responsive.css";
 
 const AppRoutes = () => {
@@ -21,9 +17,7 @@ const AppRoutes = () => {
 };
 
 const App: React.FC = () => {
-  const { isNightMode, toggleTheme } = useTheme();
   const dispatch: AppDispatch = useDispatch();
-
   const token = useSelector((state: RootState) => state.auth.token);
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -36,14 +30,11 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="app-container">
-        <Navbar />
-        <Submenu isNightMode={isNightMode} onToggle={toggleTheme} />
-
         <Suspense fallback={<Loader />}>
-          <AppRoutes />
+          <Layout>
+            <AppRoutes />
+          </Layout>
         </Suspense>
-
-        <Layout children />
       </div>
     </Router>
   );
