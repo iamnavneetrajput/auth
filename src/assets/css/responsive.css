@@ -17,19 +17,28 @@
     left: 0;
     width: 100%;
     background-color: #232323;
-    display: none;
-    animation: slideInOut 0.5s ease;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: transform 0.5s ease, opacity 0.5s ease, visibility 0.5s;
+    max-height: var(--sm-size);
   }
 
   .menu.open {
     display: flex;
-    height: var(--sm-size);
+    height: var(--sm-size) !important;
     justify-content: center;
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .menu.closed {
+    /* visibility: visible; */
     display: none;
-    animation: slideOut 0.5s ease;
+    opacity: 0;
+    transform: translateY(100%);
+    max-height: var(--sm-size);
   }
 
   .menu li {
@@ -53,26 +62,6 @@
   .break {
     display: none;
     margin-left: -4px;
-  }
-
-  @keyframes slideInOut {
-    from {
-      transform: translateY(-100%);
-    }
-
-    to {
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slideOut {
-    from {
-      transform: translateY(0);
-    }
-
-    to {
-      transform: translateY(-100%);
-    }
   }
 }
 

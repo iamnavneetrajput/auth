@@ -2,16 +2,14 @@ import React from 'react';
 import SearchBar from '../particles/SearchBar';
 import ThemeToggle from '../particles/Toggle';
 import Sublink from '../particles/Sublink';
+import useTheme from "../../utils/useTheme";
 
-interface SubmenuProps {
-  isNightMode: boolean;
-  onToggle: () => void;
-}
+const Submenu: React.FC = () => {
+  const { theme, setThemeMode } = useTheme();
 
-const Submenu: React.FC<SubmenuProps> = ({ isNightMode, onToggle }) => {
   return (
     <div className="submenu">
-      <ThemeToggle isNightMode={isNightMode} onToggle={onToggle} />
+      <ThemeToggle theme={theme} setThemeMode={setThemeMode} />
       <Sublink />
       <SearchBar />
     </div>

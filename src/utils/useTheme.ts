@@ -1,28 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+
+type ThemeType = "light" | "dark" | "system";
 
 const useTheme = () => {
-  const [isNightMode, setIsNightMode] = useState(() => {
-    return localStorage.getItem('theme') === 'dark';
-  });
-
-  // Function to toggle the theme
-  const toggleTheme = () => {
-    setIsNightMode((prev) => {
-      const newMode = !prev;
-      localStorage.setItem('theme', newMode ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', newMode ? 'dark' : 'light');
-      return newMode;
-    });
+  // Get initial theme from localStorage or system default
+  const getInitialTheme = (): ThemeType => {
+    const savedTheme = localStorage.getItem("theme") as ThemeType | null;
+    if (savedTheme) return savedTheme;
+    return "system"; // Default to system theme
   };
 
-  // Apply theme on initial render
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    setIsNightMode(savedTheme === 'dark');
-  }, []);
+  const [theme, setTheme] = useState<ThemeType>(getInitialTheme);
 
-  return { isNightMode, toggleTheme };
+  useEffect(() => {
+    const applyTheme = (selectedTheme: ThemeType) => {
+      if (selectedTheme === "system") {
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+      } else {
+        document.documentElement.setAttribute("data-theme", selectedTheme);
+      }
+    };
+
+    applyTheme(theme);
+    localStorage.setItem("theme", theme);
+
+    // Listen for system theme changes
+    if (theme === "system") {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const handleChange = () => {
+        document.documentElement.setAttribute("data-theme", mediaQuery.matches ? "dark" : "light");
+      };
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
+  }, [theme]);
+
+  const setThemeMode = (mode: ThemeType) => setTheme(mode);
+
+  return { theme, setThemeMode };
 };
 
 export default useTheme;

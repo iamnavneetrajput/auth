@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '../../assets/icons/icon';
 
@@ -11,14 +11,16 @@ interface EmojiPickerProps {
 const EMOJIS = ['😀', '😂', '😍', '😎', '🤔', '😭', '😡', '👍', '👎', '👏', '🖕'];
 
 const EmojiPicker: React.FC<EmojiPickerProps> = React.memo(({ onSelectEmoji, onClose }) => {
+  const [closing, setClosing] = useState(false); // Controls fade-out animation
+
   // Handle keyboard events (Escape to close)
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        onClose();
+        closeModal();
       }
     },
-    [onClose]
+    []
   );
 
   useEffect(() => {
@@ -28,11 +30,20 @@ const EmojiPicker: React.FC<EmojiPickerProps> = React.memo(({ onSelectEmoji, onC
     };
   }, [handleKeyDown]);
 
+  /** Triggers fade-out before removing modal from DOM */
+  const closeModal = () => {
+    setClosing(true); // Start fade-out animation
+    setTimeout(() => {
+      onClose(); // Remove modal from DOM after animation ends
+      setClosing(false); // Reset animation state
+    }, 300); // Matches animation duration
+  };
+
   return ReactDOM.createPortal(
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+    <div className={`modal-overlay ${closing ? 'fade-out' : ''}`} onClick={closeModal}>
+      <div className={`modal-container ${closing ? 'scale-out' : ''}`} onClick={(e) => e.stopPropagation()}>
         {/* Close Button */}
-        <button className="close-modal" onClick={onClose} aria-label="Close Emoji Picker">
+        <button className="close-modal" onClick={closeModal} aria-label="Close Emoji Picker">
           <CloseIcon />
         </button>
 

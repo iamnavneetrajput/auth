@@ -28,7 +28,7 @@
 /* Content Input (Fixed Height & Scrollable) */
 .editor-content {
   text-align: left;
-  height: 350px;
+  height: 400px;
   /* Fixed height */
   padding: 10px;
   border: 1px solid #cbd5e1;
@@ -41,6 +41,15 @@
   /* Preserves spacing and wraps text */
   word-wrap: break-word;
   /* Ensures words wrap properly */
+}
+
+.editor-content video{
+  height: 200px;
+  width: -webkit-fill-available;
+}
+.editor-content img{
+  height: 150px;
+  width: -webkit-fill-available;
 }
 
 
@@ -105,7 +114,6 @@ pre {
 pre code {
   display: block;
   white-space: pre-wrap;
-  /* Wrap long lines */
   font-family: Consolas, 'Courier New', monospace;
 }
 
@@ -132,7 +140,7 @@ pre code {
   overflow-y: hidden;
   white-space: nowrap;
   scrollbar-width: thin;
-  scrollbar-color: yellow transparent;
+  scrollbar-color: var(--primary-color) transparent;
 }
 
 
@@ -288,6 +296,11 @@ button.emoji-button{
   transform: scale(1.2);
 }
 
+.color-button {
+  transition: color 0.3s ease-in-out;
+  color: var(--text-color) !important;
+}
+
 /* Modal overlay styles (common for all modals) */
 .modal-overlay,
 .unified-modal-overlay {
@@ -301,6 +314,11 @@ button.emoji-button{
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  animation: fadeIn 0.3s forwards;
+}
+
+.modal-overlay.fade-out {
+  animation: fadeOut 0.3s forwards;
 }
 
 /* Modal container (common for all modals) */
@@ -314,6 +332,11 @@ button.emoji-button{
   position: relative;
   box-sizing: border-box;
   border-radius: 8px;
+  animation: scaleIn 0.3s forwards;
+}
+
+.modal-container.scale-out {
+  animation: scaleOut 0.3s forwards;
 }
 
 /* Close button styling */
@@ -371,4 +394,46 @@ button.modal-button.submit-button{
   font-size: 1.2em;
   vertical-align: middle;
   color: var(--text-color);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Closing animation (fade out & scale down) */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+  }
 }

@@ -9,7 +9,7 @@ const recentPosts = [
     timeAgo: "3 days ago",
     title: "This is the title of the blog that design same as shown in the image and make responsive",
     tags: ["webdev", "Programming", "ai"],
-    blogImage: 'https://farm2.staticflickr.com/1533/26541536141_41abe98db3_z_d.jpg',
+    blogImage: '',
     likes: 120,
     comments: 22,
     readTime: "2 min",

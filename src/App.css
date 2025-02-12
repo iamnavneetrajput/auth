@@ -4,12 +4,12 @@
   --primary-color-hover: #0056b3;
   --secondary-color: #7b61ff; /* Vibrant Purple */
   --neutral-color: #2e2e2e; /* Charcoal */
-  --background: #ffffff; /* White */
+  --background: #FAFAFA; /* Light Mode */
   --text-color: #333333; /* Neutral Dark */
   --shadow-color: rgba(0, 0, 0, 0.2);
   --button-color: #d6b934;
 
-  /* Skleton */
+  /* Skeleton */
   --skeleton-gradient: linear-gradient(
     90deg,
     hsl(210, 15%, 88%),
@@ -25,63 +25,74 @@
   --medium-size: 4rem;
   --large-size: 8rem;
 
-
-  /* for extra width */
+  /* Extra width */
   --extra-width: 20rem;
-
 
   /* Constant colors */
   --menu-color: #1e1e1e;
-  --black : #000000;
-  --white : #ffffff;
-  --gray : #808080;
+  --black: #000000;
+  --white: #ffffff;
+  --gray: #808080;
   --input-color: #5b90cc; /* Modern Blue */
 }
 
-[data-theme='dark'] {
+/* Dark Theme */
+[data-theme="dark"] {
   --background: #181818;
   --text-color: #e5e5e5;
   --shadow-color: rgba(0, 0, 0, 0.6);
-  --primary-color: #30363d; 
+  --primary-color: #30363d;
   --primary-color-hover: #4a5868;
 
-  /*Skleton*/
+  /* Skeleton */
   --skeleton-gradient: linear-gradient(
     90deg,
     hsl(210, 2%, 18%),
     hsl(210, 2%, 16%),
     hsl(220, 3%, 17%)
   );
-  --box-shadow-color: rgba(0, 0, 0, 0.6); /* Darker shadow */
+  --box-shadow-color: rgba(0, 0, 0, 0.6);
 }
 
+/* System Theme: Inherits from OS */
+[data-theme="system"] {
+  color-scheme: light dark; /* Allows OS to decide */
+}
+
+/* Core Layout */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-color: var(--background);
   color: var(--text-color);
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-[data-theme='dark'] .home-image,
-[data-theme='dark'] .about-image {
+/* Image Fix for Dark Mode */
+[data-theme="dark"] .home-image,
+[data-theme="dark"] .about-image {
   background-image: none;
 }
-[data-theme='dark'] .st-sunMoonThemeToggleBtn svg{
-  color: #fff9c2;;
+
+/* Theme Toggle Button (Dark Mode Fix) */
+[data-theme="dark"] .st-sunMoonThemeToggleBtn svg {
+  color: #fff9c2;
 }
 
+/* Remove Default Outline & Tap Highlight */
 button, input, textarea, select {
-  outline: none; /* Remove blue outline */
-  -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile */
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* Remove Focus Outline */
 button:focus, input:focus, textarea:focus, select:focus {
-  outline: none; /* Remove outline on focus */
-  box-shadow: none; /* Remove focus shadow */
+  outline: none;
+  box-shadow: none;
 }
 
-
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -101,6 +112,7 @@ button:focus, input:focus, textarea:focus, select:focus {
   background: var(--secondary-color);
 }
 
+/* Smooth Theme Transition */
 body {
   margin: 0;
   padding: 0;

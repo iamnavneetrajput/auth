@@ -11,6 +11,7 @@ interface CodeBlockAdderProps {
 
 const CodeBlockAdder: React.FC<CodeBlockAdderProps> = ({ handleAddCodeBlock }) => {
   const [isCodeMenuOpen, setIsCodeMenuOpen] = useState<boolean>(false);
+  const [closing, setClosing] = useState<boolean>(false); // Control fade-out animation
   const [codeInput, setCodeInput] = useState<string>('');
   const [message, setMessage] = useState<string | null>(null);
   const [messageType, setMessageType] = useState<'success' | 'error' | null>(null);
@@ -19,7 +20,7 @@ const CodeBlockAdder: React.FC<CodeBlockAdderProps> = ({ handleAddCodeBlock }) =
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setIsCodeMenuOpen(false);
+        closeModal();
       }
     },
     []
@@ -44,11 +45,20 @@ const CodeBlockAdder: React.FC<CodeBlockAdderProps> = ({ handleAddCodeBlock }) =
 
     const highlightedCode = Prism.highlight(codeInput, Prism.languages.javascript, 'javascript');
     handleAddCodeBlock(`<pre><code class="language-javascript">${highlightedCode}</code></pre>`);
-    
+
     setMessage('Code block added successfully!');
     setMessageType('success');
     setCodeInput('');
-    setIsCodeMenuOpen(false);
+    closeModal();
+  };
+
+  /** Triggers fade-out before removing modal from DOM */
+  const closeModal = () => {
+    setClosing(true); // Start fade-out animation
+    setTimeout(() => {
+      setIsCodeMenuOpen(false); // Remove modal from DOM after animation ends
+      setClosing(false); // Reset animation state
+    }, 300); // Matches animation duration
   };
 
   return (
@@ -58,10 +68,10 @@ const CodeBlockAdder: React.FC<CodeBlockAdderProps> = ({ handleAddCodeBlock }) =
       </button>
 
       {isCodeMenuOpen && (
-        <div className="modal-overlay" onClick={() => setIsCodeMenuOpen(false)}>
-          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+        <div className={`modal-overlay ${closing ? 'fade-out' : ''}`} onClick={closeModal}>
+          <div className={`modal-container ${closing ? 'scale-out' : ''}`} onClick={(e) => e.stopPropagation()}>
             {/* Close Button */}
-            <button className="close-modal" onClick={() => setIsCodeMenuOpen(false)} aria-label="Close">
+            <button className="close-modal" onClick={closeModal} aria-label="Close">
               <CloseIcon />
             </button>
 
@@ -85,7 +95,7 @@ const CodeBlockAdder: React.FC<CodeBlockAdderProps> = ({ handleAddCodeBlock }) =
               <button className="modal-button submit-button" onClick={addCodeBlock} disabled={!codeInput.trim()}>
                 <AddIcon />
               </button>
-              <button className="modal-button cancel-button" onClick={() => setIsCodeMenuOpen(false)}>
+              <button className="modal-button cancel-button" onClick={closeModal}>
                 <Close />
               </button>
             </div>

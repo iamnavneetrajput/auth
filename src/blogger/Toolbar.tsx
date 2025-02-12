@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import FontSelector from './components/FontSelector';
 import TextFormattingButtons from './components/TextFormattingButtons';
 import { CiTextAlignCenter, CiTextAlignLeft, CiTextAlignRight } from 'react-icons/ci';
-import MediaUploader from './components/MediaUploader';
+import ImageUploader from './components/ImageUploader';
+import VideoUploader from './components/VideoUploader';
 import LinkAdder from './components/LinkAdder';
 import EmojiPicker from './components/EmojiPicker';
 import { SmileIcon, BulletListIcon, NumberListIcon } from '../assets/icons/icon';
 import CodeBlockAdder from './components/CodeBlockAdder';
 import CategorySelector from './components/CategorySelector';
 
-// Define types for props
 interface ToolbarProps {
   editorRef: React.RefObject<HTMLDivElement>;
   setCategory: (category: string) => void;
@@ -129,19 +129,39 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorRef, setCategory }) => {
         setLinkName={setLinkName}
       />
 
-      {/* Media Uploader */}
-      <MediaUploader
-        handleMediaUpload={(event, type) => {
+      {/* Image Uploader */}
+      <ImageUploader
+        handleMediaUpload={(event) => {
           const file = event.target.files?.[0];
           if (!file || !editorRef.current) return;
 
           const fileURL = URL.createObjectURL(file);
-          const mediaHTML = `<${type} src="${fileURL}" alt="Uploaded media"/>`;
+          const mediaHTML = `<img src="${fileURL}" alt="Uploaded image"/>`;
           editorRef.current.innerHTML += mediaHTML;
         }}
-        handleAddMedia={(type) => {
+        handleAddMedia={() => {
           if (!editorRef.current) return;
-          const mediaHTML = `<${type} src="${urlInput}" alt="Inserted media"/>`;
+          const mediaHTML = `<img src="${urlInput}" alt="Inserted image"/>`;
+          editorRef.current.innerHTML += mediaHTML;
+          setUrlInput('');
+        }}
+        urlInput={urlInput}
+        setUrlInput={setUrlInput}
+      />
+
+      {/* Video Uploader */}
+      <VideoUploader
+        handleMediaUpload={(event) => {
+          const file = event.target.files?.[0];
+          if (!file || !editorRef.current) return;
+
+          const fileURL = URL.createObjectURL(file);
+          const mediaHTML = `<video controls><source src="${fileURL}" type="video/mp4"></video>`;
+          editorRef.current.innerHTML += mediaHTML;
+        }}
+        handleAddMedia={() => {
+          if (!editorRef.current) return;
+          const mediaHTML = `<video controls><source src="${urlInput}" type="video/mp4"></video>`;
           editorRef.current.innerHTML += mediaHTML;
           setUrlInput('');
         }}

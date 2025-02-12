@@ -14,6 +14,8 @@ const PRESET_COLORS = ['#000000', '#FF0000', '#FFD700', '#FFFFFF', '#008000', '#
 
 const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({ handleTextFormatting, selectedColor, setSelectedColor }) => {
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
+  const [closing, setClosing] = useState(false); // Controls fade-out animation
+
   const [activeFormats, setActiveFormats] = useState<{ bold: boolean; italic: boolean; underline: boolean }>({
     bold: false,
     italic: false,
@@ -40,7 +42,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({ handleTex
 
     if (command === 'foreColor') {
       setSelectedColor(value || selectedColor);
-      setShowColorPicker(false); // Close modal after selecting a color
+      closeModal(); // Close modal after selecting a color
     } else {
       setActiveFormats((prev) => ({
         ...prev,
@@ -51,7 +53,7 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({ handleTex
 
   /** Closes color picker on Escape key press */
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
-    if (event.key === 'Escape') setShowColorPicker(false);
+    if (event.key === 'Escape') closeModal();
   }, []);
 
   useEffect(() => {
@@ -62,6 +64,15 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({ handleTex
     }
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [showColorPicker, handleKeyDown]);
+
+  /** Triggers fade-out before removing modal from DOM */
+  const closeModal = () => {
+    setClosing(true); // Start fade-out animation
+    setTimeout(() => {
+      setShowColorPicker(false); // Remove modal from DOM after animation ends
+      setClosing(false); // Reset animation state
+    }, 300); // Matches animation duration
+  };
 
   return (
     <div className="text-format-buttons">
@@ -76,17 +87,21 @@ const TextFormattingButtons: React.FC<TextFormattingButtonsProps> = ({ handleTex
         </button>
       ))}
 
-      {/* Color Picker Button */}
-      <button className={`color-button ${showColorPicker ? 'active' : ''}`} onClick={() => setShowColorPicker(true)}>
+      {/* Color Picker Button (Icon Changes Color Based on Selection) */}
+      <button
+        className={`color-button ${showColorPicker ? 'active' : ''}`}
+        onClick={() => setShowColorPicker(true)}
+        style={{ color: selectedColor }} // Change icon color dynamically
+      >
         <ImTextColor title="Text Color" />
       </button>
 
-      {/* Color Picker Modal with Fixed Colors */}
+      {/* Color Picker Modal with Fade & Scale Animation */}
       {showColorPicker && (
-        <div className="modal-overlay" onClick={() => setShowColorPicker(false)}>
-          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+        <div className={`modal-overlay ${closing ? 'fade-out' : ''}`} onClick={closeModal}>
+          <div className={`modal-container ${closing ? 'scale-out' : ''}`} onClick={(e) => e.stopPropagation()}>
             {/* Close Button */}
-            <button className="close-modal" onClick={() => setShowColorPicker(false)}>
+            <button className="close-modal" onClick={closeModal}>
               <CloseIcon />
             </button>
 

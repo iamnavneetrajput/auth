@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { LinkIcon } from '../../assets/icons/icon';
+import { LinkIcon, Close, AddIcon } from '../../assets/icons/icon';
 import Notification from '../../components/particles/Notification';
-import { Close, AddIcon } from '../../assets/icons/icon';
 
 interface LinkAdderProps {
   handleAddLink: () => void;
@@ -13,6 +12,7 @@ interface LinkAdderProps {
 
 const LinkAdder: React.FC<LinkAdderProps> = ({ handleAddLink, urlInput, setUrlInput, linkName, setLinkName }) => {
   const [isLinkMenuOpen, setIsLinkMenuOpen] = useState<boolean>(false);
+  const [closing, setClosing] = useState<boolean>(false); // Controls fade-out animation
   const [message, setMessage] = useState<string | null>(null);
   const [messageType, setMessageType] = useState<'success' | 'error' | null>(null);
 
@@ -27,14 +27,14 @@ const LinkAdder: React.FC<LinkAdderProps> = ({ handleAddLink, urlInput, setUrlIn
     handleAddLink();
     setMessage('Link added successfully!');
     setMessageType('success');
-    setIsLinkMenuOpen(false);
+    closeModal();
   };
 
   /** Handles closing modal with Escape key */
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setIsLinkMenuOpen(false);
+        closeModal();
       }
     },
     []
@@ -50,6 +50,15 @@ const LinkAdder: React.FC<LinkAdderProps> = ({ handleAddLink, urlInput, setUrlIn
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isLinkMenuOpen, handleKeyDown]);
 
+  /** Triggers fade-out before removing modal from DOM */
+  const closeModal = () => {
+    setClosing(true); // Start fade-out animation
+    setTimeout(() => {
+      setIsLinkMenuOpen(false); // Remove modal from DOM after animation ends
+      setClosing(false); // Reset animation state
+    }, 300); // Matches animation duration
+  };
+
   return (
     <div>
       {/* Trigger Button */}
@@ -59,11 +68,11 @@ const LinkAdder: React.FC<LinkAdderProps> = ({ handleAddLink, urlInput, setUrlIn
 
       {/* Modal */}
       {isLinkMenuOpen && (
-        <div className="modal-overlay" onClick={() => setIsLinkMenuOpen(false)}>
-          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+        <div className={`modal-overlay ${closing ? 'fade-out' : ''}`} onClick={closeModal}>
+          <div className={`modal-container ${closing ? 'scale-out' : ''}`} onClick={(e) => e.stopPropagation()}>
             {/* Close Button */}
-            <button className="close-modal" onClick={() => setIsLinkMenuOpen(false)} aria-label="Close">
-              X
+            <button className="close-modal" onClick={closeModal} aria-label="Close">
+              <Close />
             </button>
 
             {/* URL Input */}
@@ -87,10 +96,10 @@ const LinkAdder: React.FC<LinkAdderProps> = ({ handleAddLink, urlInput, setUrlIn
             {/* Buttons */}
             <div className="button-group">
               <button className="modal-button submit-button" onClick={handleLinkSubmit} disabled={!urlInput.trim() || !linkName.trim()}>
-                <AddIcon/>
+                <AddIcon />
               </button>
-              <button className="modal-button cancel-button" onClick={() => setIsLinkMenuOpen(false)}>
-              <Close/>
+              <button className="modal-button cancel-button" onClick={closeModal}>
+                <Close />
               </button>
             </div>
           </div>

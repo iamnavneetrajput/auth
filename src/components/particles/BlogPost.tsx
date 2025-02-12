@@ -1,7 +1,7 @@
 import React from "react";
-import { FaHeart, FaComment, FaBookmark } from "react-icons/fa";
 
-const defaultProfileImage = "https://farm9.staticflickr.com/8505/8441256181_4e98d8bff5_z_d.jpg"; // Default profile image
+const defaultProfileImage = "https://farm9.staticflickr.com/8505/8441256181_4e98d8bff5_z_d.jpg";
+import PostFooter from "./PostFooter";
 
 interface BlogPostProps {
   author: string;
@@ -54,10 +54,12 @@ const BlogPost: React.FC<BlogPostProps> = ({
 
       {/* Footer: Likes, Comments, Bookmark, Read Time */}
       <div className="post-footer">
-        <span><FaHeart /> {likes}</span>
-        <span><FaComment /> {comments}</span>
-        <span><FaBookmark /></span>
-        <span>{readTime} read</span>
+        <PostFooter
+          likes={likes}
+          comments={comments}
+          readTime={readTime}
+          variant="preview"
+        />
       </div>
     </div>
   );
