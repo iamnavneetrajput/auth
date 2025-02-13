@@ -4,11 +4,12 @@ import CommentButton from "../buttons/CommentButton";
 import BookmarkButton from "../buttons/BookmarkButton";
 import ShareButton from "../buttons/ShareButton";
 import CopyLinkButton from "../buttons/CopyLinkButton";
+import ReadTime from "../buttons/ReadTime";
 
 interface PostFooterProps {
   likes: number;
   comments: number;
-  readTime: string;
+  readTime: number;
   variant?: "preview" | "detailed"; // Defines layout type
 }
 
@@ -27,7 +28,7 @@ const PostFooter: React.FC<PostFooterProps> = ({ likes, comments, readTime, vari
         </>
       )}
 
-      <span>{readTime} read</span>
+      <span><ReadTime time={readTime} /></span>
     </div>
   );
 };

@@ -1,17 +1,18 @@
 import { FC } from 'react';
-import PageHeader from '../components/particles/PageHeader';
+import Sidebar from '../components/layout/Sidebar';
+import BlogPost from '../components/particles/BlogPost';
 
 const Home: FC = () => {
 
     return (
         <div className='main'>
-            <PageHeader
-                title="Welcome to Home"
-                paragraph="This is a paragraph of text specific to the Home Page."
-                buttonText="Explore Courses"
-                buttonLink="/course"
-                className="home-image"
-            />
+
+            <Sidebar />
+            <BlogPost author={'me'} date={'24 feb'} timeAgo={'4 day'} title={'How to implement'} tags={["ai"]} likes={10} comments={20} readTime={3} />
+            <BlogPost author={'me'} date={'24 feb'} timeAgo={'4 day'} title={'How to implement'} tags={["ai"]} likes={10} comments={20} readTime={3} />
+            <BlogPost author={'me'} date={'24 feb'} timeAgo={'4 day'} title={'How to implement'} tags={["ai"]} likes={10} comments={20} readTime={3} />
+            <BlogPost author={'me'} date={'24 feb'} timeAgo={'4 day'} title={'How to implement'} tags={["ai"]} likes={10} comments={20} readTime={3} />
+            <BlogPost author={'me'} date={'24 feb'} timeAgo={'4 day'} title={'How to implement'} tags={["ai"]} likes={10} comments={20} readTime={3} />
 
         </div>
     );

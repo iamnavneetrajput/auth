@@ -1,21 +1,27 @@
 import React, { useState } from "react";
-import { Share2 } from "lucide-react";
+import { Share } from "lucide-react";
 
 const ShareButton: React.FC = () => {
   const [isShared, setIsShared] = useState(false);
 
+  const handleShare = () => {
+    setIsShared(true);
+    setTimeout(() => setIsShared(false), 2000); // Reset after 2 sec
+  };
+
   return (
-    <button
-      onClick={() => setIsShared(!isShared)}
-      className="p-3 rounded-full transition-colors duration-200 hover:bg-gray-200"
-      aria-label="Share"
-    >
-      <Share2
-        className={`w-8 h-8 transition-all duration-300 ease-out
-          ${isShared ? "fill-green-500 stroke-green-500 scale-110" : "stroke-gray-600 hover:stroke-green-500"}
-        `}
-      />
-    </button>
+    <div className="share-button-container">
+      <button
+        onClick={handleShare}
+        className={`share-button ${isShared ? "shared" : ""}`}
+        aria-label="Share"
+      >
+        <Share className="share-icon" />
+      </button>
+
+      {/* "Shared!" Tooltip */}
+      {isShared && <span className="share-tooltip">Shared!</span>}
+    </div>
   );
 };
 

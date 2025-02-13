@@ -13,7 +13,7 @@ interface BlogPostProps {
   blogImage?: string;
   likes: number;
   comments: number;
-  readTime: string;
+  readTime: number;
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({

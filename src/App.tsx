@@ -11,6 +11,7 @@ import "./App.css";
 import "./assets/css/style.css";
 import "./assets/css/post.css"
 import "./assets/css/responsive.css";
+import "./assets/css/button.css"
 
 const AppRoutes = () => {
   return useRoutes(appRoutes); // Use Routes from react-router

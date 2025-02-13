@@ -12,7 +12,7 @@ const recentPosts = [
     blogImage: '',
     likes: 120,
     comments: 22,
-    readTime: "2 min",
+    readTime: 2,
   },
   {
     author: "Abhinit Singh",
@@ -24,7 +24,7 @@ const recentPosts = [
     blogImage: "",
     likes: 120,
     comments: 25,
-    readTime: "3 min",
+    readTime: 3,
   },
 ];
 

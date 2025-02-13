@@ -2,11 +2,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
 import lastPageReducer from '../reducers/lastPageSlice';
+import  ThemeState  from '../reducers/themeSlice'; // Add this line
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     lastPage: lastPageReducer,
+    theme: ThemeState, 
   },
 });
 
